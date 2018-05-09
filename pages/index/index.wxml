@@ -3,21 +3,12 @@
   <view class='header'>
     <view class='headerPanel'>
       <block wx:for='{{headerTitleName}}' wx:key='{{item.nameID}}'>
-        <view data-id='{{item.nameID}}' data-url='{{item.nameUrl}}' data-newstype='{{item.newsType}}' class="headerTitle {{item.nameID == tapID? 'headerTitleActive':''}}" bindtap='headerTitleClick'>{{item.name}}</view>
+        <view data-id='{{item.nameID}}' data-url='{{item.nameUrl}}' data-newstype='{{item.newsType}}' class="headerTitle {{item.nameID == topID? 'headerTitleActive':''}}" bindtap='headerTitleClick'>{{item.name}}</view>
       </block>
     </view>
   </view>
 
   <view class='content'>
-    <view class='content-top-pic'>
-      <swiper class="swiper" indicator-dots="true" autoplay="true" interval="50000" duration="1000">
-        <block wx:for="{{topPic}}" wx:key='{{item.ID}}'>
-          <swiper-item>
-            <image src="{{item.url}}" class="slide-image" mode="aspectFill" />
-          </swiper-item>
-        </block>
-      </swiper>
-    </view>
     <view class='content-list'>
       <block wx:for='{{contentNewsList}}' wx:key='{{item.id}}'>
         <view class='list-item' bindtap='viewDetail'  data-newsid='{{item.id}}'>

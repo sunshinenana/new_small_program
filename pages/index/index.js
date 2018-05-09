@@ -4,17 +4,12 @@ const app = getApp();
 
 let contentNewsList;
 let newsType;
-let topPic = [
-  { url: '', ID: '1' },
-  { url: '', ID: '2' },
-  { url: '', ID: '3' },
-  { url: '', ID: '4' }
-];
-
 let newsUrl;
 let newsTitle;
 let newsAuthor;
 let newsid;
+let source;
+let newTime;
 
 Page({
   data: {
@@ -27,8 +22,7 @@ Page({
       { name: '体育', nameID: '6', newsType: 'ty' },
       { name: '其他', nameID: '7', newsType: 'other' },
     ],
-    topPic: topPic,
-    tapID: 1, //判断是否选中
+    topID: 1, //判断是否选中
     contentNewsList: contentNewsList,
   },
 
@@ -49,7 +43,13 @@ Page({
       method: 'GET',
       success: res => {
         let resultData = res.data.result;
+        for (let i = 0; i < resultData.length; i++) {
+          resultData[i].source = resultData[i].source == '' ? '未知来源' : resultData[i].source;
+          newTime = resultData[i].date.split('T')[1].split(':')[0] + ":" + resultData[i].date.split('T')[1].split(':')[1];
+          resultData[i].date = newTime;
+        }
         _this.setData({
+          topID: e.target.dataset.id,
           contentNewsList: resultData,
         })
 
@@ -60,15 +60,6 @@ Page({
       complete: () => {
 
       }
-    })
-  },
-
-  //跳转到新闻详情页
-
-  viewDetail: function (e) {
-    newsid = e.currentTarget.dataset.newsid;
-    wx.navigateTo({
-      url: '../detail/detail?id=' + newsid
     })
   },
 
@@ -80,6 +71,11 @@ Page({
       method: 'GET',
       success: res => {
         let resultData = res.data.result;
+        for (let i = 0; i < resultData.length; i++) {
+          resultData[i].source = resultData[i].source == '' ? '未知来源' : resultData[i].source;
+          newTime = resultData[i].date.split('T')[1].split(':')[0] + ":"+ resultData[i].date.split('T')[1].split(':')[1];
+          resultData[i].date = newTime;
+        }
         _this.setData({
           contentNewsList: resultData,
         })
@@ -91,6 +87,14 @@ Page({
       complete: () => {
 
       }
+    })
+  },
+  //跳转到新闻详情页
+
+  viewDetail: function (e) {
+    newsid = e.currentTarget.dataset.newsid;
+    wx.navigateTo({
+      url: '../detail/detail?id=' + newsid
     })
   },
 })

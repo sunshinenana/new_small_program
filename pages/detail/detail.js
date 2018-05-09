@@ -6,10 +6,12 @@ let newImage;
 let newSource;
 let newDate;
 let source;
+let newTime;
 Page({
   data: {
     msgDetail: {}
   },
+  
   onLoad: function (options) {
     let _this = this;
     newsid = options.id;
@@ -21,6 +23,7 @@ Page({
       method: 'GET',
       success: res => {
         let resultDetail = res.data.result;
+        console.log(resultDetail);
         let contentAr = resultDetail.content;
         newContent = '';
         // for (let i = 0; i < contentAr.length; i += 1) {
@@ -30,12 +33,15 @@ Page({
         //     newContent += "<" + contentAr[i]['type'] + ">" + contentAr[i]['text'] + "</" + contentAr[i]['type'] + ">";
         //   }
         // }
-        console.log(resultDetail);
         source = resultDetail.source == '' ? '未知来源' : resultDetail.source;
+
+        newTime = resultDetail.date.split('T')[1].split(':')[0] + ":" + resultDetail.date.split('T')[1].split(':')[1];
+
         _this.setData({
           newsTitle: resultDetail.title,
           newContent: contentAr,
-          newSource: source
+          newSource: source,
+          newDate: newTime
         })
 
       },

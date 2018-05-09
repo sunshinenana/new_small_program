@@ -2,12 +2,13 @@
 <view class='detail'>
   <view class='header'>
     <view class='article-title'>{{newsTitle}}</view>
+    <view class='news-date'>{{newDate}}</view>
     <view class='news-source'>{{newSource}}</view>
   </view>
   <view class='content'>
     <view class='contentTip' wx:for='{{newContent}}'>
         <view wx:if="{{item.type == 'image'}}">
-            <image src='{{item.src}}'/>
+            <image src='{{item.src}}' mode="widthFix" class='img'/>
         </view>
         <view wx:else>
             <text>{{item.text}}</text>
