@@ -1,0 +1,17 @@
+<!--pages/detail/detail.wxml-->
+<view class='detail'>
+  <view class='header'>
+    <view class='article-title'>{{newsTitle}}</view>
+    <view class='news-source'>{{newSource}}</view>
+  </view>
+  <view class='content'>
+    <view class='contentTip' wx:for='{{newContent}}'>
+        <view wx:if="{{item.type == 'image'}}">
+            <image src='{{item.src}}'/>
+        </view>
+        <view wx:else>
+            <text>{{item.text}}</text>
+        </view>
+    </view>
+  </view>
+</view>
