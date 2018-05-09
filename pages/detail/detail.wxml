@@ -2,11 +2,11 @@
 <view class='detail'>
   <view class='header'>
     <view class='article-title'>{{newsTitle}}</view>
-    <view class='news-date'>{{newDate}}</view>
-    <view class='news-source'>{{newSource}}</view>
+    <view class='news-date'>{{newSource}}　　{{newDate}}</view>
+    <view class='news-click'>阅读人数:1048</view>
   </view>
   <view class='content'>
-    <view class='contentTip' wx:for='{{newContent}}'>
+    <view class='contentDec' wx:for='{{newContent}}'>
         <view wx:if="{{item.type == 'image'}}">
             <image src='{{item.src}}' mode="widthFix" class='img'/>
         </view>

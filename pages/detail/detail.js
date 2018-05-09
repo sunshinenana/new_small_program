@@ -23,16 +23,8 @@ Page({
       method: 'GET',
       success: res => {
         let resultDetail = res.data.result;
-        console.log(resultDetail);
         let contentAr = resultDetail.content;
         newContent = '';
-        // for (let i = 0; i < contentAr.length; i += 1) {
-        //   if (contentAr[i]['type'] == 'image') {
-        //     newContent += "<" + contentAr[i]['type'] + " src='" + contentAr[i]['src']+"'>";
-        //   } else {
-        //     newContent += "<" + contentAr[i]['type'] + ">" + contentAr[i]['text'] + "</" + contentAr[i]['type'] + ">";
-        //   }
-        // }
         source = resultDetail.source == '' ? '未知来源' : resultDetail.source;
 
         newTime = resultDetail.date.split('T')[1].split(':')[0] + ":" + resultDetail.date.split('T')[1].split(':')[1];

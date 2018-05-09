@@ -12,13 +12,13 @@
 .article-title {
   font-size: 44rpx;
 }
-
-.news-source::before {
+contentDec
+.news-date::before {
   color: #909090;
   font-size: 26rpx;
 }
 
-.news-source {
+.news-click {
   float: right;
   color: #909090;
   font-size: 26rpx;
@@ -42,13 +42,13 @@
   display:block;
 }
 
-.contentTip {
+.contentDec {
   margin-top: 80rpx; 
   font-size: 30rpx;
   text-align: justify;
   color: #000;
 }
-.contentTip .img {
+.contentDec .img {
    width: 100%;
 }
 .article-content {
