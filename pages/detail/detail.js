@@ -1,7 +1,7 @@
 var app = getApp();
 let newsTitle;
 let newsid;
-let newContent;
+let newsContent;
 let newImage;
 let newSource;
 let newDate;
@@ -9,7 +9,7 @@ let source;
 let newTime;
 Page({
   data: {
-    msgDetail: {}
+    msgDetail: {},
   },
   
   onLoad: function (options) {
@@ -24,14 +24,22 @@ Page({
       success: res => {
         let resultDetail = res.data.result;
         let contentAr = resultDetail.content;
-        newContent = '';
+        let newContent = [];
         source = resultDetail.source == '' ? '未知来源' : resultDetail.source;
 
         newTime = resultDetail.date.split('T')[1].split(':')[0] + ":" + resultDetail.date.split('T')[1].split(':')[1];
-
+        for (let i = 0; i < contentAr.length; i++) { 
+          let ctype = contentAr[i]['type'];
+          if(ctype == 'image') {
+            this.setImage(contentAr[i], newContent);
+          } else {
+            this.setText(contentAr[i], newContent);
+          }
+        }
+        console.log(newContent);
         _this.setData({
           newsTitle: resultDetail.title,
-          newContent: contentAr,
+          newsContent: newContent,
           newSource: source,
           newDate: newTime
         })
@@ -45,16 +53,27 @@ Page({
       }
     })
   },
-  onReady: function () {
-    // 页面渲染完成  
-  },
-  onShow: function () {
-    // 页面显示  
-  },
-  onHide: function () {
-    // 页面隐藏  
-  },
-  onUnload: function () {
-    // 页面关闭  
-  }
+  setImage: function (contentArr, newContentArr) {
+    newContentArr.push({
+      nodes: [{
+        name: 'img',
+        attrs: {
+          src: contentArr.src,
+          height: '100%',
+          width: '100%'
+        },
+      }]
+    });
+  }, 
+  setText: function (contentArr, newContentArr) {
+    newContentArr.push({
+      nodes: [{
+        name: contentArr.type,
+        children: [{
+          type: 'text',
+          text: contentArr.text
+        }],
+      }]
+    });
+  }, 
 })  

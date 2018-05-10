@@ -10,6 +10,7 @@ let newsAuthor;
 let newsid;
 let source;
 let newTime;
+let defaultImage;
 
 Page({
   data: {
@@ -24,21 +25,45 @@ Page({
     ],
     topID: 1, //判断是否选中
     contentNewsList: contentNewsList,
+    defaultImage: '../../image/timg.jpg', //设置默认图片
   },
 
   newsType: 'top', //默认请求的是头条数据
 
-  //事件处理函数
-
-  //headerBar 点击
+  //headerBar点击
   headerTitleClick: function (e) {
-    let _this = this;
     newsType = e.currentTarget.dataset.newstype;
-    //获取新闻
+    this.setData({
+      topID: e.target.dataset.id
+    })
+    this.getNewList(newsType);
+  },
+
+  //下拉刷新
+  onPullDownRefresh() {
+    this.getNewList(() => {
+      wx.stopPullDownRefresh()
+    })
+  },
+
+  onLoad: function () {
+    this.getNewList('gn');
+  },
+
+  //跳转到新闻详情页
+  viewDetail: function (e) {
+    newsid = e.currentTarget.dataset.newsid;
+    wx.navigateTo({
+      url: '../detail/detail?id=' + newsid
+    })
+  },
+
+  //获取新闻列表
+  getNewList(newType) {
     wx.request({
       url: 'https://test-miniprogram.com/api/news/list',
       data: {
-        type: newsType
+        type: newType
       },
       method: 'GET',
       success: res => {
@@ -48,8 +73,7 @@ Page({
           newTime = resultData[i].date.split('T')[1].split(':')[0] + ":" + resultData[i].date.split('T')[1].split(':')[1];
           resultData[i].date = newTime;
         }
-        _this.setData({
-          topID: e.target.dataset.id,
+        this.setData({
           contentNewsList: resultData,
         })
 
@@ -61,40 +85,5 @@ Page({
 
       }
     })
-  },
-
-  onLoad: function () {
-    var _this = this;
-    wx.request({
-      url: 'https://test-miniprogram.com/api/news/list?type=gn',
-      data: {},
-      method: 'GET',
-      success: res => {
-        let resultData = res.data.result;
-        for (let i = 0; i < resultData.length; i++) {
-          resultData[i].source = resultData[i].source == '' ? '未知来源' : resultData[i].source;
-          newTime = resultData[i].date.split('T')[1].split(':')[0] + ":"+ resultData[i].date.split('T')[1].split(':')[1];
-          resultData[i].date = newTime;
-        }
-        _this.setData({
-          contentNewsList: resultData,
-        })
-
-      },
-      fail: error => {
-
-      },
-      complete: () => {
-
-      }
-    })
-  },
-  //跳转到新闻详情页
-
-  viewDetail: function (e) {
-    newsid = e.currentTarget.dataset.newsid;
-    wx.navigateTo({
-      url: '../detail/detail?id=' + newsid
-    })
-  },
+  }
 })
