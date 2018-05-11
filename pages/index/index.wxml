@@ -14,7 +14,7 @@
         <view class='list-item' bindtap='viewDetail'  data-newsid='{{item.id}}'>
           <view class='list-item-content'>
             <view class='list-item-left'>
-              <image src='{{item.firstImage == "" ? defaultImage : item.firstImage}}'></image>
+              <image src='{{!item.firstImage ? defaultImage : item.firstImage}}'></image>
             </view>
             <view class='list-item-right'>
               <view class='article-title'>{{item.title}}</view>

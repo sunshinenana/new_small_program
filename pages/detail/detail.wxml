@@ -6,8 +6,8 @@
     <view class='news-source'>{{newSource}}</view>
   </view>
   <view class='content'>
-    <view class='contentTip' wx:for='{{newsContent}}' wx:key="id" wx:for-index="i">
-        <rich-text nodes="{{item.nodes}}" ></rich-text>
+    <view class='contentTip'>
+        <rich-text nodes="{{newsContent}}"></rich-text>
     </view>
   </view>
 </view>

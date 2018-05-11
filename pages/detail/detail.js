@@ -36,7 +36,6 @@ Page({
             this.setText(contentAr[i], newContent);
           }
         }
-        console.log(newContent);
         _this.setData({
           newsTitle: resultDetail.title,
           newsContent: newContent,
@@ -55,25 +54,21 @@ Page({
   },
   setImage: function (contentArr, newContentArr) {
     newContentArr.push({
-      nodes: [{
         name: 'img',
         attrs: {
           src: contentArr.src,
           height: '100%',
           width: '100%'
         },
-      }]
     });
   }, 
   setText: function (contentArr, newContentArr) {
     newContentArr.push({
-      nodes: [{
         name: contentArr.type,
         children: [{
           type: 'text',
           text: contentArr.text
         }],
-      }]
     });
   }, 
 })  

@@ -28,26 +28,27 @@ Page({
     defaultImage: '../../image/timg.jpg', //设置默认图片
   },
 
-  newsType: 'top', //默认请求的是头条数据
+  newsType: 'gn', //默认请求的是头条数据
 
   //headerBar点击
   headerTitleClick: function (e) {
     newsType = e.currentTarget.dataset.newstype;
     this.setData({
-      topID: e.target.dataset.id
+      topID: e.target.dataset.id,
+      newsType: newsType
     })
-    this.getNewList(newsType);
+    this.getNewsList(newsType);
   },
 
-  //下拉刷新
+  //监听下拉动作
   onPullDownRefresh() {
-    this.getNewList(() => {
-      wx.stopPullDownRefresh()
-    })
+    var topID = this.data.topID;
+    var newsType = this.data.newsType;
+    this.getNewsList(newsType)
   },
 
   onLoad: function () {
-    this.getNewList('gn');
+    this.getNewsList('gn');
   },
 
   //跳转到新闻详情页
@@ -59,7 +60,7 @@ Page({
   },
 
   //获取新闻列表
-  getNewList(newType) {
+  getNewsList(newType, callback) {
     wx.request({
       url: 'https://test-miniprogram.com/api/news/list',
       data: {
@@ -75,14 +76,14 @@ Page({
         }
         this.setData({
           contentNewsList: resultData,
+          newsType: newType
         })
 
       },
-      fail: error => {
-
-      },
       complete: () => {
-
+        callback && callback(
+          wx.stopPullDownRefresh()
+        )
       }
     })
   }

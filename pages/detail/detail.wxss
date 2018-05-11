@@ -46,6 +46,7 @@
   margin-top: 80rpx; 
   font-size: 30rpx;
   text-align: justify;
+  line-height: 55rpx; 
   color: #000;
 }
 .contentTip .img {
