@@ -48,7 +48,7 @@ Page({
   },
 
   onLoad: function () {
-    this.getNewsList('gn');
+    this.getNewsList('gn', wx.stopPullDownRefresh());
   },
 
   //跳转到新闻详情页
@@ -81,9 +81,7 @@ Page({
 
       },
       complete: () => {
-        callback && callback(
-          wx.stopPullDownRefresh()
-        )
+        callback && callback()
       }
     })
   }
